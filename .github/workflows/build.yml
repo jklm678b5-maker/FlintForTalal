@@ -34,13 +34,8 @@ jobs:
         jar cf ../libs/FlintNoHitbox-1.0.jar com/example/flintnohitbox/*.class
         cd ../..
     
-    - name: List files (debug)
-      run: |
-        ls -la build/libs/
-    
     - name: Upload JAR
       uses: actions/upload-artifact@v4
       with:
         name: flintnohitbox-jar
         path: build/libs/*.jar
-        retention-days: 90
