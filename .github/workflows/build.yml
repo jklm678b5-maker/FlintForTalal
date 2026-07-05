@@ -17,22 +17,11 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
     
-    - name: Download Forge
-      run: |
-        mkdir -p libs
-        wget -O libs/forge.jar https://maven.minecraftforge.net/net/minecraftforge/forge/1.8.9-11.15.1.2318-1.8.9/forge-1.8.9-11.15.1.2318-1.8.9-universal.jar
+    - name: Make gradlew executable
+      run: chmod +x gradlew
     
-    - name: Compile Mod
-      run: |
-        mkdir -p build/classes
-        javac -cp "libs/forge.jar" -d build/classes src/main/java/com/example/flintnohitbox/*.java
-    
-    - name: Create JAR
-      run: |
-        mkdir -p build/libs
-        cd build/classes
-        jar cf ../libs/FlintNoHitbox-1.0.jar com/example/flintnohitbox/*.class
-        cd ../..
+    - name: Build with Gradle
+      run: ./gradlew build --no-daemon
     
     - name: Upload JAR
       uses: actions/upload-artifact@v4
