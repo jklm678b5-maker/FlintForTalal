@@ -3,8 +3,6 @@ name: Build Mod
 on:
   push:
     branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
 
 jobs:
   build:
@@ -19,16 +17,30 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
     
-    - name: Setup Gradle 4.10.3
-      uses: gradle/actions/setup-gradle@v3
-      with:
-        gradle-version: '4.10.3'
+    - name: Download Forge
+      run: |
+        mkdir -p libs
+        wget -O libs/forge.jar https://maven.minecraftforge.net/net/minecraftforge/forge/1.8.9-11.15.1.2318-1.8.9/forge-1.8.9-11.15.1.2318-1.8.9-universal.jar
     
-    - name: Build with Gradle
-      run: gradle build
+    - name: Compile Mod
+      run: |
+        mkdir -p build/classes
+        javac -cp "libs/*" -d build/classes src/main/java/com/example/flintnohitbox/*.java
+    
+    - name: Create JAR
+      run: |
+        mkdir -p build/libs
+        cd build/classes
+        jar cf ../libs/FlintNoHitbox-1.0.jar com/example/flintnohitbox/*.class
+        cd ../..
+    
+    - name: List files (debug)
+      run: |
+        ls -la build/libs/
     
     - name: Upload JAR
       uses: actions/upload-artifact@v4
       with:
         name: flintnohitbox-jar
         path: build/libs/*.jar
+        retention-days: 90
