@@ -33,14 +33,10 @@ jobs:
         cd build/classes
         jar cf ../libs/FlintNoHitbox-1.0.jar com/example/flintnohitbox/*.class
         cd ../..
-        echo "JAR created at build/libs/FlintNoHitbox-1.0.jar"
-    
-    - name: List files (debug)
-      run: |
-        ls -la build/libs/
     
     - name: Upload JAR
       uses: actions/upload-artifact@v4
       with:
         name: flintnohitbox-jar
         path: build/libs/*.jar
+        
