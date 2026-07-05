@@ -25,7 +25,7 @@ jobs:
     - name: Compile Mod
       run: |
         mkdir -p build/classes
-        javac -cp "libs/*" -d build/classes src/main/java/com/example/flintnohitbox/*.java
+        javac -cp "libs/forge.jar" -d build/classes src/main/java/com/example/flintnohitbox/*.java
     
     - name: Create JAR
       run: |
